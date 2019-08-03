@@ -16,38 +16,33 @@
     <br />
     <br />
     <br />
-
     <v-container fluid fill-height>
       <v-layout justify-center row>
         <v-flex xs12 sm6>
-          <v-card>
+          <v-card light>
             <v-container fluid grid-list-md>
               <v-layout row>
                 <v-flex xs4>
-                  <v-card>
+                  <v-card dark>
                     <v-img :src="require('@/assets/images/customer.jpg')" height="200px"></v-img>
-
                     <v-card-actions>
-                      <v-btn text color="orange" @click="viewUsers">View Profile</v-btn>
+                      <v-btn text @click="viewUsers">View Profile</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
-
                 <v-flex xs4>
-                  <v-card>
+                  <v-card dark>
                     <v-img :src="require('@/assets/images/nonstock.jpg')" height="200px"></v-img>
-
                     <v-card-actions>
-                      <v-btn text color="orange" @click="viewNews">News</v-btn>
+                      <v-btn text @click="viewNews">News</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
                 <v-flex xs4>
-                  <v-card>
+                  <v-card dark>
                     <v-img :src="require('@/assets/images/stocks.jpg')" height="200px"></v-img>
-
                     <v-card-actions>
-                      <v-btn text color="orange" @click="viewStocks">Stock Market</v-btn>
+                      <v-btn text @click="viewStocks">Stock Market</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
@@ -79,7 +74,7 @@ export default {
       router.push("/news");
     },
     viewStocks() {
-      router.push('/stock-list');
+      router.push("/stock-list");
     },
     getUser() {
       if (

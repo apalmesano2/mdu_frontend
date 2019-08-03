@@ -1,14 +1,15 @@
 <template>
   <v-app>
-    <v-toolbar dense class="blue">
+    <v-toolbar dense color="blue darken-4">
       <v-toolbar-title>My Daily Update</v-toolbar-title>
+      <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn text dark @click="goHome">Home</v-btn>
-        <v-btn text dark @click="viewUsers">Profile</v-btn>
-        <v-btn text dark @click="viewStocks">Stock Market</v-btn>
-        <v-btn text dark @click="viewNews">News</v-btn>
-        <v-btn text dark v-if="!authenticated" @click="login">Log in</v-btn>
-        <v-btn text dark v-if="authenticated" @click="logout">Log Out</v-btn>
+        <v-btn text @click="goHome">Home</v-btn>
+        <v-btn text @click="viewUsers">Profile</v-btn>
+        <v-btn text @click="viewNews">News</v-btn>
+        <v-btn text @click="viewStocks">Stock Market</v-btn>
+        <v-btn text v-if="!authenticated" @click="login">Log in</v-btn>
+        <v-btn text v-if="authenticated" @click="logout">Log Out</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-content>

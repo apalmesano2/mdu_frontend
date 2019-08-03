@@ -2,7 +2,7 @@
   <main>
     <br />
     <v-container fluid grid-list-md>
-      <v-layout column align-left>
+      <v-layout column align-center>
         <blockquote>
           Welcome {{validUserName}}!
           <footer>
@@ -12,21 +12,23 @@
           </footer>
         </blockquote>
       </v-layout>
-
-      <v-layout column align-center>
-      </v-layout>
       <br />
-      <v-container fluid grid-list-md fill-height>
-        <v-layout column>
-          <v-flex md6>
-            <template v-for="story in news">
-              <v-card class="mb-4" v-bind:key="story">
-                <p class="headline ml-4 mt-5" v-bind:key="story">{{ story.title }}</p>
-                <p class="ml-4" v-bind:key="story">{{ story.description }}</p>
-                <v-btn class="mb-4 ml-4 blue white--text" v-bind:key="story" @click="goToLink(story.url)">Go To Article</v-btn>
+      <v-container grid-list-md fill-height>
+        <v-layout wrap>
+          <template v-for="story in news">
+            <v-flex :key="story" md4>
+              <v-card class="mb-4 mx-auto" min-height="600px" :key="story">
+                <p class="headline mx-4 pt-5" v-bind:key="story">{{ story.title }}</p>
+                <v-img :src="story.urlToImage" height="325px" contain />
+                <p class="ml-4 mt-5" :key="story">{{ story.description }}</p>
+                <v-btn
+                  class="mb-4 ml-4 blue darken-4"
+                  v-bind:key="story"
+                  @click="goToLink(story.url)"
+                >Go To Article</v-btn>
               </v-card>
-            </template>
-          </v-flex>
+            </v-flex>
+          </template>
         </v-layout>
       </v-container>
     </v-container>
