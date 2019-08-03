@@ -42,7 +42,7 @@
           <template v-for="group in groups">
             <v-flex :key="group" md4>
               <v-card :key="group">
-                <p class="headline mx-4 pt-3 mb-0">{{ group[0] }}</p>
+                <p class="headline mx-4 pt-3 mb-0">{{ group[0].substring(8) }}</p>
                 <hr class="mb-2" />
                 <template v-for="sector in group[1]">
                   <div :key="sector" class="mx-4">{{ sector[0] }}: {{ sector[1] }}</div>
