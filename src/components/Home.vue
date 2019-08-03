@@ -24,7 +24,7 @@
               <v-layout row>
                 <v-flex xs4>
                   <v-card dark>
-                    <v-img :src="require('@/assets/images/customer.jpg')" height="200px"></v-img>
+                    <v-img :src="require('@/assets/images/user.png')" height="200px" contain></v-img>
                     <v-card-actions>
                       <v-btn text @click="viewUsers">View Profile</v-btn>
                     </v-card-actions>
