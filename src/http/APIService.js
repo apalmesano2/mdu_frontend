@@ -53,7 +53,11 @@ export class APIService {
   }
 
   getSectorData() {
-    return axios.get(`https://www.alphavantage.co/query?function=SECTOR&apikey=${STOCK_API}`)
+    return axios.get(`https://www.alphavantage.co/query?function=SECTOR&apikey=${STOCK_API}`);
+  }
+
+  getMarketTracker() {
+    return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=^DJI&outputsize=compact&apikey=${STOCK_API}`);
   }
 
   authenticateLogin(credentials) {

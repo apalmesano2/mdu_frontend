@@ -55,6 +55,10 @@ export default {
   mounted() {
     this.getNews();
     this.showMessages();
+    if (localStorage.getItem("isAuthenticates")) {
+      this.authenticated = true;
+      this.validUserName = JSON.parse(localStorage.getItem("log_user"));
+    }
   },
   methods: {
     showMessages() {
@@ -68,13 +72,12 @@ export default {
         this.news = response.data.articles;
       })
       .catch(error => {
-        this.news = {
-          'title': 'There was an issue retrieving your news',
-          'description': 'Please try again later',
-          'url': '',
-          'urlToImage': '@/assets/images/broken.png'
-
-        }
+        if (error.response.status === 401) {
+            localStorage.removeItem("isAuthenticates");
+            localStorage.removeItem("log_user");
+            localStorage.removeItem("token");
+            router.push("/auth");
+          }
       });
     },
     goToLink(url) {

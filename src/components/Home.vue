@@ -32,7 +32,7 @@
                 </v-flex>
                 <v-flex xs4>
                   <v-card dark>
-                    <v-img :src="require('@/assets/images/nonstock.jpg')" height="200px"></v-img>
+                    <v-img :src="require('@/assets/images/news.jpeg')" height="200px"></v-img>
                     <v-card-actions>
                       <v-btn text @click="viewNews">News</v-btn>
                     </v-card-actions>
