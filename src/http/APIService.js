@@ -2,6 +2,7 @@
 import axios from 'axios';
 const API_URL = 'http://mydailyupdate.herokuapp.com'; /* http://groyce.pythonanywhere.com/ or http://localhost:8000 */
 const NEWS_API = '5e1e0ae2beea466f8673c0ab1ae181f8';
+const STOCK_API = '5MHUFOYQCBAHIL3Z'
 
 export class APIService {
   constructor() {
@@ -49,6 +50,10 @@ export class APIService {
 
   getNewsForPage(user) {
     return axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${NEWS_API}`);
+  }
+
+  getSectorData() {
+    return axios.get(`https://www.alphavantage.co/query?function=SECTOR&apikey=${STOCK_API}`)
   }
 
   authenticateLogin(credentials) {

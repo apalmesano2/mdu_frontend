@@ -66,6 +66,15 @@ export default {
     getNews() {
       apiService.getNewsForPage().then(response => {
         this.news = response.data.articles;
+      })
+      .catch(error => {
+        this.news = {
+          'title': 'There was an issue retrieving your news',
+          'description': 'Please try again later',
+          'url': '',
+          'urlToImage': '@/assets/images/broken.png'
+
+        }
       });
     },
     goToLink(url) {

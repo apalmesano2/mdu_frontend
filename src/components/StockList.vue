@@ -7,56 +7,34 @@
           Welcome {{validUserName}}!
           <footer>
             <small>
-              <em>&mdash;Eagle Financial Services, your Midwest Financial Services Partner.</em>
+              <em>&mdash;Check out how the stock market is doing!</em>
             </small>
           </footer>
         </blockquote>
       </v-layout>
-
-      <v-layout column align-center>
-        <v-flex xs6 sm8 md7>
-          <v-alert
-            v-if="showMsg === 'new'"
-            dismissible
-            :value="true"
-            type="success"
-          >New stock has been added.</v-alert>
-          <v-alert
-            v-if="showMsg === 'update'"
-            dismissible
-            :value="true"
-            type="success"
-          >Stock information has been updated.</v-alert>
-          <v-alert
-            v-if="showMsg === 'deleted'"
-            dismissible
-            :value="true"
-            type="success"
-          >Selected Stock has been deleted.</v-alert>
-        </v-flex>
-      </v-layout>
       <br />
-      <v-container fluid grid-list-md fill-height>
-        <v-layout column>
-          <v-flex md6>
-            <v-data-table
-              :headers="headers"
-              :items="stocks"
-              hide-default-footer
-              class="elevation-1"
-              fixed
-              style="max-height: 300px; overflow-y: auto"
-            >
-              <template v-slot:item.actions="{ item }">
-                <v-icon @click="updateStock(item)">mdi-pencil</v-icon>
-                <v-icon @click="deleteStock(item)">mdi-trash-can</v-icon>
-              </template>
-            </v-data-table>
+      <v-container grid-list-md fill-height>
+        <v-layout wrap>
+          <v-flex md12>
+            <v-card class="mb-4 mx-auto">
+              <p class="headline mx-4 pt-3 mb-0">{{ sectors['Meta Data']['Information'] }}</p>
+              <p class="mx-4 pb-2">Last Refreshed: {{ this.sectors['Meta Data']['Last Refreshed'] }}</p>
+            </v-card>
           </v-flex>
+          <template v-for="group in groups">
+            <v-flex :key=group md4>
+              <v-card :key="group">
+                <p class="headline mx-4 pt-3 mb-0">{{ group[0] }}</p>
+                <hr class="mb-2"/>
+                <template v-for="sector in group[1]">
+                  <div :key="sector" class="mx-4">{{ sector[0] }}: {{ sector[1] }}</div>
+                </template>
+                <br/>
+              </v-card>
+            </v-flex>
+          </template>
         </v-layout>
       </v-container>
-
-      <v-btn class="blue white--text" @click="addNewStock">Add Stock</v-btn>
     </v-container>
   </main>
 </template>
@@ -70,22 +48,15 @@ const apiService = new APIService();
 export default {
   name: "StockList",
   data: () => ({
-    stocks: [],
+    sectors: [],
+    groups: [],
     validUserName: "Guest",
     stockSize: 0,
     showMsg: "",
-    headers: [
-      { text: "Customer", value:"customer", sortable: false, align: "left" },
-      { text: "Symbol", value:"symbol", sortable: false, align: "left" },
-      { text: "Name", value:"name", sortable: false, align: "left" },
-      { text: "Shares", value:"shares", sortable: false, align: "left" },
-      { text: "Purchase Price", value:"purchase_price", sortable: false, align: "left" },
-      { text: "Purchase Date", value:"purchase_date", sortable: false, align: "left" },
-      { text:"Actions", name: "Actions", value: "actions"}
-    ]
+    headers: []
   }),
   mounted() {
-    this.getStocks();
+    this.getSectors();
     this.showMessages();
   },
   methods: {
@@ -95,19 +66,24 @@ export default {
         this.showMsg = this.$route.params.msg;
       }
     },
-    getStocks() {
-      window.x = this;
+    getSectors() {
       apiService
-        .getStockList()
+        .getSectorData()
         .then(response => {
-          this.stocks = response.data.data;
-          this.stockSize = this.stocks.length;
-          if (
-            localStorage.getItem("isAuthenticates") &&
-            JSON.parse(localStorage.getItem("isAuthenticates")) === true
-          ) {
-            this.validUserName = JSON.parse(localStorage.getItem("log_user"));
-          }
+          window.x = this;
+          this.sectors = response.data;
+          const res = Object.entries(response.data);
+          res.shift();
+          res.forEach(element => {
+            element[1] = Object.entries(element[1]);
+          });
+          this.groups = res;
+          // if (
+          //   localStorage.getItem("isAuthenticates") &&
+          //   JSON.parse(localStorage.getItem("isAuthenticates")) === true
+          // ) {
+          //   this.validUserName = JSON.parse(localStorage.getItem("log_user"));
+          // }
         })
         .catch(error => {
           if (error.response.status === 401) {
@@ -117,19 +93,6 @@ export default {
             router.push("/auth");
           }
         });
-    },
-    addNewStock() {
-      if (
-        localStorage.getItem("isAuthenticates") &&
-        JSON.parse(localStorage.getItem("isAuthenticates")) === true
-      ) {
-        router.push("/stock-create");
-      } else {
-        router.push("/auth");
-      }
-    },
-    updateStock(stock) {
-      router.push("/stock-create/" + stock.pk);
     },
     deleteStock(stock) {
       apiService

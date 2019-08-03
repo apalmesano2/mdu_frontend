@@ -5,9 +5,9 @@
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn text @click="goHome">Home</v-btn>
-        <v-btn text @click="viewUsers">Profile</v-btn>
         <v-btn text @click="viewNews">News</v-btn>
         <v-btn text @click="viewStocks">Stock Market</v-btn>
+        <v-btn text v-if="authenticated" @click="viewUsers">Profile</v-btn>
         <v-btn text v-if="!authenticated" @click="login">Log in</v-btn>
         <v-btn text v-if="authenticated" @click="logout">Log Out</v-btn>
       </v-toolbar-items>
