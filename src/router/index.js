@@ -5,8 +5,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Auth from '@/components/Auth'
 import UserProfile from '@/components/UserProfile'
 import UserCreate from '@/components/UserCreate'
-import InvestmentList from '@/components/InvestmentList'
-import InvestmentCreate from '@/components/InvestmentCreate'
+import NewsList from '@/components/NewsList'
 import StockList from '@/components/StockList'
 import StockCreate from '@/components/StockCreate'
 
@@ -43,24 +42,9 @@ export default new Router({
       component: UserCreate
     },
     {
-      path: '/investment-list',
-      name: 'InvestmentList',
-      component: InvestmentList
-    },
-    {
-      path: '/investment-list/:msg',
-      name: 'InvestmentUpdatedList',
-      component: InvestmentList
-    },
-    {
-      path: '/investment-create',
-      name: 'InvestmentCreate',
-      component: InvestmentCreate
-    },
-    {
-      path: '/investment-create/:pk',
-      name: 'InvestmentUpdate',
-      component: InvestmentCreate
+      path: '/news',
+      name: 'NewsList',
+      component: NewsList
     },
     {
       path: '/stock-list',

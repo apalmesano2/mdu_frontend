@@ -38,7 +38,7 @@
                     <v-img :src="require('@/assets/images/nonstock.jpg')" height="200px"></v-img>
 
                     <v-card-actions>
-                      <v-btn text color="orange" @click="viewInvestments">News</v-btn>
+                      <v-btn text color="orange" @click="viewNews">News</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
@@ -75,8 +75,8 @@ export default {
     viewUsers() {
       router.push("/user-list");
     },
-    viewInvestments() {
-      router.push("/investment-list");
+    viewNews() {
+      router.push("/news");
     },
     viewStocks() {
       router.push('/stock-list');

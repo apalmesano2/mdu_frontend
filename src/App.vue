@@ -5,8 +5,8 @@
       <v-toolbar-items>
         <v-btn text dark @click="goHome">Home</v-btn>
         <v-btn text dark @click="viewUsers">Profile</v-btn>
-        <v-btn text dark @click="viewStocks">News</v-btn>
-        <v-btn text dark @click="viewInvestments">Stock Market</v-btn>
+        <v-btn text dark @click="viewStocks">Stock Market</v-btn>
+        <v-btn text dark @click="viewNews">News</v-btn>
         <v-btn text dark v-if="!authenticated" @click="login">Log in</v-btn>
         <v-btn text dark v-if="authenticated" @click="logout">Log Out</v-btn>
       </v-toolbar-items>
@@ -58,8 +58,8 @@ export default {
       router.push("/user-list");
     },
 
-    viewInvestments() {
-      router.push("/investment-list");
+    viewNews() {
+      router.push("/news");
     },
 
     viewStocks() {
