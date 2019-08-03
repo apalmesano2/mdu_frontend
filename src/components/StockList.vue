@@ -22,7 +22,7 @@
               <v-layout wrap>
                 <template v-for="day in tracker">
                   <v-flex :key="day" md2>
-                    <v-card :key="day" class="mx-3 pa-2">
+                    <v-card :key="day" class="mx-3 mb-2 pa-2">
                       <p class="mb-0 title">{{ day[0] }}</p>
                       <hr class="mb-1" />
                       <p class="mb-0">Open: ${{ day[1]['1. open'] }}</p>
@@ -34,9 +34,9 @@
                 </template>
               </v-layout>
             </v-card>
-            <v-card class="mb-4 mx-auto">
+            <v-card class="mx-auto">
               <p class="headline mx-4 pt-3 mb-0">{{ sectors['Meta Data']['Information'] }}</p>
-              <p class="mx-4 pb-2">Last Refreshed: {{ this.sectors['Meta Data']['Last Refreshed'] }}</p>
+              <p class="mb-1 mx-4 pb-2">Last Refreshed: {{ this.sectors['Meta Data']['Last Refreshed'] }}</p>
             </v-card>
           </v-flex>
           <template v-for="group in groups">

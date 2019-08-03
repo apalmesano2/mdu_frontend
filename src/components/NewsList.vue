@@ -17,7 +17,7 @@
         <v-layout wrap>
           <template v-for="story in news">
             <v-flex :key="story" md4>
-              <v-card class="mb-4 mx-auto" min-height="600px" :key="story">
+              <v-card class="mx-auto" min-height="600px" :key="story">
                 <p class="headline mx-4 pt-5" v-bind:key="story">{{ story.title }}</p>
                 <v-img :src="story.urlToImage" height="325px" contain />
                 <p class="ml-4 mt-5" :key="story">{{ story.description }}</p>
