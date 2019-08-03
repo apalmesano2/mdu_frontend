@@ -1,0 +1,78 @@
+<template>
+  <v-app>
+    <v-toolbar dense class="blue">
+      <v-toolbar-title>My Daily Update</v-toolbar-title>
+      <v-toolbar-items>
+        <v-btn text dark @click="goHome">Home</v-btn>
+        <v-btn text dark @click="viewUsers">Profile</v-btn>
+        <v-btn text dark @click="viewStocks">News</v-btn>
+        <v-btn text dark @click="viewInvestments">Stock Market</v-btn>
+        <v-btn text dark v-if="!authenticated" @click="login">Log in</v-btn>
+        <v-btn text dark v-if="authenticated" @click="logout">Log Out</v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+    <v-content>
+      <router-view />
+    </v-content>
+  </v-app>
+</template>
+
+<script>
+import router from "./router";
+import { APIService } from "./http/APIService";
+const apiService = new APIService();
+
+export default {
+  name: "App",
+  data: () => ({
+    authenticated: false
+  }),
+
+  mounted() {
+    apiService
+      .getUserList()
+      .then(response => {
+        this.authenticated = true;
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          localStorage.removeItem("isAuthenticates");
+          localStorage.removeItem("log_user");
+          localStorage.removeItem("token");
+          this.authenticated = false;
+        }
+      });
+    console.log("this.authenticated--" + this.authenticated);
+  },
+
+  methods: {
+    logout() {
+      localStorage.removeItem("isAuthenticates");
+      localStorage.removeItem("log_user");
+      localStorage.removeItem("token");
+      this.authenticated = false;
+      // router.push('/');
+      window.location = "/";
+    },
+    viewUsers() {
+      router.push("/user-list");
+    },
+
+    viewInvestments() {
+      router.push("/investment-list");
+    },
+
+    viewStocks() {
+      router.push("stock-list");
+    },
+
+    login() {
+      router.push("/auth");
+    },
+
+    goHome() {
+      router.push("/");
+    }
+  }
+};
+</script>

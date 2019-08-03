@@ -1,0 +1,104 @@
+<template>
+  <main>
+    <br />
+    <v-container fluid grid-list-md>
+      <v-layout column align-left>
+        <blockquote>
+          Welcome {{validUserName}}!
+          <footer>
+            <small>
+              <em>&mdash;Below are the top news stories right now.</em>
+            </small>
+          </footer>
+        </blockquote>
+      </v-layout>
+
+      <v-layout column align-center>
+        <v-flex xs6 sm8 md7>
+          <v-alert
+            v-if="showMsg === 'new'"
+            dismissible
+            :value="true"
+            type="success"
+          >New investment has been added.</v-alert>
+          <v-alert
+            v-if="showMsg === 'update'"
+            dismissible
+            :value="true"
+            type="success"
+          >Investment information has been updated.</v-alert>
+          <v-alert
+            v-if="showMsg === 'deleted'"
+            dismissible
+            :value="true"
+            type="success"
+          >Selected Investment has been deleted.</v-alert>
+        </v-flex>
+      </v-layout>
+      <br />
+      <v-container fluid grid-list-md fill-height>
+        <v-layout column>
+          <v-flex md6>
+            <template v-for="story in news">
+              <v-card class="mb-4" v-bind:key="story">
+                <p class="headline ml-4 mt-5" v-bind:key="story">{{ story.title }}</p>
+                <p class="ml-4" v-bind:key="story">{{ story.description }}</p>
+                <v-btn class="mb-4 ml-4 blue white--text" v-bind:key="story" @click="goToLink(story.url)">Go To Article</v-btn>
+              </v-card>
+            </template>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-container>
+  </main>
+</template>
+
+
+<script>
+import router from "../router";
+import { APIService } from "../http/APIService";
+import vuetify from "../plugins/vuetify";
+import Axios from "axios";
+const apiService = new APIService();
+
+export default {
+  name: "InvestmentList",
+  data: () => ({
+    news: [],
+    storyURLs: [],
+    validUserName: "Guest",
+    investmentSize: 0,
+    showMsg: "",
+    headers: [
+      {
+        text: "Recent Date",
+        value: "recent_date",
+        sortable: false,
+        align: "left"
+      },
+      { text: "Actions", name: "Actions", value: "actions" }
+    ]
+  }),
+  mounted() {
+    this.getNews();
+    this.showMessages();
+  },
+  methods: {
+    showMessages() {
+      console.log(this.$route.params.msg);
+      if (this.$route.params.msg) {
+        this.showMsg = this.$route.params.msg;
+      }
+    },
+    getNews() {
+      apiService.getNewsForPage().then(response => {
+        this.news = response.data.articles;
+      });
+    },
+    goToLink(url) {
+      window.open(url, "_blank");
+    }
+  }
+};
+</script>
+
