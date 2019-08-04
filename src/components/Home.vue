@@ -19,12 +19,12 @@
     <v-container fluid fill-height>
       <v-layout justify-center row>
         <v-flex xs12 sm6>
-          <v-card dark>
+          <v-card>
             <v-container fluid grid-list-md>
               <v-layout row>
 
                 <v-flex xs4>
-                  <v-card dark>
+                  <v-card>
                     <v-img :src="require('@/assets/images/tiles/user.png')" height="200px"></v-img>
                     <v-card-actions>
                       <v-btn text @click="viewUsers">View Profile</v-btn>
@@ -33,7 +33,7 @@
                 </v-flex>
 
                 <v-flex xs4>
-                  <v-card dark>
+                  <v-card>
                     <v-img :src="require('@/assets/images/tiles/news.png')" height="200px"></v-img>
                     <v-card-actions>
                       <v-btn text @click="viewNews">News</v-btn>
@@ -42,7 +42,7 @@
                 </v-flex>
 
                 <v-flex xs4>
-                  <v-card dark>
+                  <v-card>
                     <v-img :src="require('@/assets/images/tiles/sports.png')" height="200px"></v-img>
                     <v-card-actions>
                       <v-btn text @click="viewSports">Sports</v-btn>
@@ -51,7 +51,7 @@
                 </v-flex>
 
                 <v-flex xs4>
-                  <v-card dark>
+                  <v-card>
                     <v-img :src="require('@/assets/images/tiles/stocks.png')" height="200px"></v-img>
                     <v-card-actions>
                       <v-btn text @click="viewStocks">Stocks</v-btn>
@@ -60,7 +60,7 @@
                 </v-flex>
 
                 <v-flex xs4>
-                  <v-card dark>
+                  <v-card>
                     <v-img :src="require('@/assets/images/tiles/events.png')" height="200px"></v-img>
                     <v-card-actions>
                       <v-btn text @click="viewEvents">Events</v-btn>
@@ -69,7 +69,7 @@
                 </v-flex>
 
                 <v-flex xs4>
-                  <v-card dark>
+                  <v-card>
                     <v-img :src="require('@/assets/images/tiles/weather.png')" height="200px"></v-img>
                     <v-card-actions>
                       <v-btn text @click="viewWeather">Weather</v-btn>
