@@ -19,33 +19,64 @@
     <v-container fluid fill-height>
       <v-layout justify-center row>
         <v-flex xs12 sm6>
-          <v-card light>
+          <v-card dark>
             <v-container fluid grid-list-md>
               <v-layout row>
+
                 <v-flex xs4>
                   <v-card dark>
-                    <v-img :src="require('@/assets/images/user.png')" height="200px" contain></v-img>
+                    <v-img :src="require('@/assets/images/tiles/user.png')" height="200px"></v-img>
                     <v-card-actions>
                       <v-btn text @click="viewUsers">View Profile</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
+
                 <v-flex xs4>
                   <v-card dark>
-                    <v-img :src="require('@/assets/images/news.jpeg')" height="200px"></v-img>
+                    <v-img :src="require('@/assets/images/tiles/news.png')" height="200px"></v-img>
                     <v-card-actions>
                       <v-btn text @click="viewNews">News</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
+
                 <v-flex xs4>
                   <v-card dark>
-                    <v-img :src="require('@/assets/images/stocks.jpg')" height="200px"></v-img>
+                    <v-img :src="require('@/assets/images/tiles/sports.png')" height="200px"></v-img>
                     <v-card-actions>
-                      <v-btn text @click="viewStocks">Stock Market</v-btn>
+                      <v-btn text @click="viewSports">Sports</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
+
+                <v-flex xs4>
+                  <v-card dark>
+                    <v-img :src="require('@/assets/images/tiles/stocks.png')" height="200px"></v-img>
+                    <v-card-actions>
+                      <v-btn text @click="viewStocks">Stocks</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-flex>
+
+                <v-flex xs4>
+                  <v-card dark>
+                    <v-img :src="require('@/assets/images/tiles/events.png')" height="200px"></v-img>
+                    <v-card-actions>
+                      <v-btn text @click="viewEvents">Events</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-flex>
+
+                <v-flex xs4>
+                  <v-card dark>
+                    <v-img :src="require('@/assets/images/tiles/weather.png')" height="200px"></v-img>
+                    <v-card-actions>
+                      <v-btn text @click="viewWeather">Weather</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-flex>
+
               </v-layout>
             </v-container>
           </v-card>
@@ -73,8 +104,17 @@ export default {
     viewNews() {
       router.push("/news");
     },
+    viewSports() {
+      router.push("/sports");
+    },
     viewStocks() {
-      router.push("/stock-list");
+      router.push("/stocks");
+    },
+    viewEvents() {
+      router.push("/events");
+    },
+    viewWeather() {
+      router.push("/weather");
     },
     getUser() {
       if (
@@ -91,6 +131,6 @@ export default {
 <style>
 .v-content {
   height: 100%;
+  background-color: #303030;
 }
 </style>
-

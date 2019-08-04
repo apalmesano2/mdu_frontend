@@ -5,7 +5,10 @@ import Auth from '@/components/Auth'
 import UserProfile from '@/components/UserProfile'
 import UserCreate from '@/components/UserCreate'
 import NewsList from '@/components/NewsList'
-import StockList from '@/components/StockList'
+import Sports from '@/components/Sports'
+import Stocks from '@/components/Stocks'
+import Events from '@/components/Events'
+import Weather from '@/components/Weather';
 
 Vue.use(Router)
 
@@ -44,14 +47,23 @@ export default new Router({
       component: NewsList
     },
     {
-      path: '/stock-list',
-      name: 'StockList',
-      component: StockList
+      path: '/sports',
+      name: 'Sports',
+      component: Sports
     },
     {
-      path: '/stock-list/:msg',
-      name: 'StockUpdatedList',
-      component: StockList
+      path: '/stocks',
+      name: 'Stocks',
+      component: Stocks
+    },
+    {
+      path: '/events',
+      name: 'Events',
+      component: Events
+    },    {
+      path: '/weather',
+      name: 'Weather',
+      component: Weather
     },
     {
       path: '/auth',

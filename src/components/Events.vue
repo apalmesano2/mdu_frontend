@@ -64,7 +64,7 @@ import { APIService } from "../http/APIService";
 const apiService = new APIService();
 
 export default {
-  name: "StockList",
+  name: "Stocks",
   data: () => ({
     sectors: [],
     groups: [],

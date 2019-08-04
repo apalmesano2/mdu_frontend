@@ -6,7 +6,19 @@ import router from './router'
 import vuetify from '@/plugins/vuetify'
 import VueSession from 'vue-session'
 
-Vue.use(VueSession)
+// Color theme from: https://lobotuerto.com/thingies/vuetify-color-theme-builder/ //
+
+Vue.use(VueSession, {
+  theme: {
+    "primary": "#1976D2",
+    "secondary": "#424242",
+    "accent": "#82B1FF",
+    "error": "#FF5252",
+    "info": "#2196f3",
+    "success": "#7cb342",
+    "warning": "#FB8C00"
+  }
+})
 
 Vue.config.productionTip = false
 
