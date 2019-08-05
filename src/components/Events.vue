@@ -7,7 +7,7 @@
           Welcome {{validUserName}}!
           <footer>
             <small>
-              <em>&mdash;Check out how the stock market is doing!</em>
+              <em>&mdash; Enter a city or zip code to see upcoming events for that area</em>
             </small>
           </footer>
         </blockquote>
@@ -16,41 +16,72 @@
       <v-container grid-list-md fill-height>
         <v-layout wrap>
           <v-flex md12>
-            <v-card v-if="authenticated" class="mb-4 mx-auto">
-              <p class="headline mx-4 pt-3 mb-0">Your Market Tracker's Previous 6 Days:</p>
+            <v-card class="mb-2 mx-auto">
+              <v-form ref="form" v-model="valid" lazy-validation>
+                <v-layout row justify-center>
+                  <v-flex md10>
+                    <v-text-field
+                      class="ml-5"
+                      label="Location"
+                      v-model="location"
+                      :rules="rules.location"
+                      maxlength="5"
+                    />
+                  </v-flex>
+                  <v-flex md1>
+                    <v-select
+                      v-model="radius"
+                      :items="items"
+                      label="Radius (miles)"
+                      :append-icon="appendIcon ? 'mdi-plus' : ''"
+                      :prepend-icon="prependIcon ? 'mdi-minus' : ''"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex md1>
+                    <v-btn
+                      class="mt-4 ml-5 blue darken-4"
+                      :disabled="!valid"
+                      @click="getEventsList(location, radius)"
+                    >Submit</v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-form>
+            </v-card>
+          </v-flex>
+          <v-flex md12>
+            <v-card v-if="locationEntered" class="mb-1">
+              <div class="headline ml-4 pt-2">Upcoming Events for {{ location }}</div>
               <hr class="mb-2" />
+
               <v-layout wrap>
-                <template v-for="day in tracker">
-                  <v-flex :key="day" md2>
-                    <v-card :key="day" class="mx-3 mb-2 pa-2">
-                      <p class="mb-0 title">{{ day[0] }}</p>
-                      <hr class="mb-1" />
-                      <p class="mb-0">Open: ${{ day[1]['1. open'] }}</p>
-                      <p class="mb-0">High: ${{ day[1]['2. high'] }}</p>
-                      <p class="mb-0">Low: ${{ day[1]['3. low'] }}</p>
-                      <p>Close: ${{ day[1]['4. close'] }}</p>
+                <template v-for="event in upcomingEvents">
+                  <v-flex :key="event" md4>
+                    <v-card class="mx-auto" :key="event">
+                      <p class="headline mx-4 pt-5" :key="event">{{ event.title }}</p>
+                      <v-img
+                        v-if="event.image"
+                        :src="event.image.medium.url"
+                        height="325px"
+                        contain
+                      />
+                      <v-img
+                        v-else
+                        :src="require('@/assets/images/broken.png')"
+                        height="325px"
+                        contain
+                      />
+                      <p class="ml-4 mt-5" :key="event">{{ event.description }}</p>
+                      <v-btn
+                        class="mb-4 ml-4 blue darken-4"
+                        v-bind:key="event"
+                        @click="goToLink(event.url)"
+                      >View Event Page</v-btn>
                     </v-card>
                   </v-flex>
                 </template>
               </v-layout>
             </v-card>
-            <v-card class="mx-auto">
-              <p class="headline mx-4 pt-3 mb-0">{{ sectors['Meta Data']['Information'] }}</p>
-              <p class="mb-1 mx-4 pb-2">Last Refreshed: {{ this.sectors['Meta Data']['Last Refreshed'] }}</p>
-            </v-card>
           </v-flex>
-          <template v-for="group in groups">
-            <v-flex :key="group" md4>
-              <v-card :key="group">
-                <p class="headline mx-4 pt-3 mb-0">{{ group[0].substring(8) }}</p>
-                <hr class="mb-2" />
-                <template v-for="sector in group[1]">
-                  <div :key="sector" class="mx-4">{{ sector[0] }}: {{ sector[1] }}</div>
-                </template>
-                <br />
-              </v-card>
-            </v-flex>
-          </template>
         </v-layout>
       </v-container>
     </v-container>
@@ -64,23 +95,32 @@ import { APIService } from "../http/APIService";
 const apiService = new APIService();
 
 export default {
-  name: "Stocks",
+  name: "Weather",
   data: () => ({
-    sectors: [],
-    groups: [],
-    tracker: [],
+    valid: true,
     authenticated: false,
+    location: "",
+    radius: 0,
+    locationEntered: false,
+    upcomingEvents: [],
     validUserName: "Guest",
     showMsg: "",
-    headers: []
+    headers: [],
+    rules: {
+      location: [
+        v =>
+          /^[a-zA-Z0-9,. ]+$/.test(v) ||
+          "Please only enter letters, commas, and/or dashes"
+      ],
+      radius: []
+    },
+    items: [1, 5, 10, 25, 50, 100]
   }),
   mounted() {
-    this.getSectors();
     this.showMessages();
     if (localStorage.getItem("isAuthenticates")) {
       this.authenticated = true;
       this.validUserName = JSON.parse(localStorage.getItem("log_user"));
-      this.getMarketTracker();
     }
   },
   methods: {
@@ -90,79 +130,28 @@ export default {
         this.showMsg = this.$route.params.msg;
       }
     },
-    getSectors() {
-      apiService
-        .getSectorData()
-        .then(response => {
-          this.sectors = response.data;
-          const res = Object.entries(response.data);
-          res.shift();
-          res.forEach(element => {
-            element[1] = Object.entries(element[1]);
-          });
-          this.groups = res;
-        })
-        .catch(error => {
-          if (error.response.status === 401) {
-            localStorage.removeItem("isAuthenticates");
-            localStorage.removeItem("log_user");
-            localStorage.removeItem("token");
-            router.push("/auth");
+    getEventsList(location, radius) {
+      this.locationEntered = true;
+      apiService.getEvents(location, radius).then(response => {
+        const temp = response.data.events.event;
+        temp.forEach((element, index) => {
+          // this if block is to remove the advertisements disguised as real events
+          if (element.title.includes("Marketing: ")) {
+            temp.splice(index, 1);
           }
         });
+        this.upcomingEvents = temp;
+      });
     },
-    getMarketTracker() {
-      apiService
-        .getMarketTracker()
-        .then(response => {
-          const respData = Object.entries(response.data["Time Series (Daily)"]);
-          for (let i = 100; i > 6; i--) {
-            respData.pop();
-          }
-          respData.forEach(item => {
-            item[0] = new Date(item[0]).toDateString();
-
-            //debugger;
-            item[1]["1. open"] = parseFloat(item[1]["1. open"]);
-            item[1]["1. open"] = item[1]["1. open"].toFixed(2);
-            item[1]["1. open"] = item[1]["1. open"].replace(
-              /\B(?=(\d{3})+(?!\d))/g,
-              ","
-            );
-
-            item[1]["2. high"] = parseFloat(item[1]["2. high"]);
-            item[1]["2. high"] = item[1]["2. high"].toFixed(2);
-            item[1]["2. high"] = item[1]["2. high"].replace(
-              /\B(?=(\d{3})+(?!\d))/g,
-              ","
-            );
-
-            item[1]["3. low"] = parseFloat(item[1]["3. low"]);
-            item[1]["3. low"] = item[1]["3. low"].toFixed(2);
-            item[1]["3. low"] = item[1]["3. low"].replace(
-              /\B(?=(\d{3})+(?!\d))/g,
-              ","
-            );
-
-            item[1]["4. close"] = parseFloat(item[1]["4. close"]);
-            item[1]["4. close"] = item[1]["4. close"].toFixed(2);
-            item[1]["4. close"] = item[1]["4. close"].replace(
-              /\B(?=(\d{3})+(?!\d))/g,
-              ","
-            );
-          });
-          this.tracker = respData;
-        })
-        .catch(error => {
-          if (error.response.status === 401) {
-            this.authenticated = false;
-            localStorage.removeItem("isAuthenticates");
-            localStorage.removeItem("log_user");
-            localStorage.removeItem("token");
-            router.push("/auth");
-          }
-        });
+    goToLink(url) {
+      window.open(url, "_blank");
     }
   }
 };
 </script>
+<style>
+.v-content {
+  height: 100%;
+  background-color: #303030;
+}
+</style>

@@ -4,6 +4,7 @@ const API_URL = 'http://mydailyupdate.herokuapp.com'; /* http://groyce.pythonany
 const NEWS_API = '5e1e0ae2beea466f8673c0ab1ae181f8';
 const STOCK_API = '5MHUFOYQCBAHIL3Z';
 const WEATHER_API = '32bad162ffbf4942ad533f40ca430f9f';
+const EVENT_API = 'skjftv2QV4mQXVRw';
 
 export class APIService {
   constructor() {
@@ -71,6 +72,17 @@ export class APIService {
     const url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${WEATHER_API}&postal_code={ZIP_CODE}&country=US`;
     const newURL = url.replace('{ZIP_CODE}', zipcode);
     return axios.get(newURL);
+  }
+
+  getEvents(location, radius) {
+    if(location.includes(', ')) {
+      location.replace(', ', '+');
+    }
+    // Eventful API doesn't like CORS requests, have to use a proxy here
+    const url = `https://cors-anywhere.herokuapp.com/http://api.eventful.com/json/events/search?app_key=${EVENT_API}&location={LOCATION}&date=Future&within={RADIUS}`;
+    const newURL = url.replace('{LOCATION}', location);
+    const newerURL = newURL.replace('{RADIUS}', radius);
+    return axios.get(newerURL);
   }
 
   authenticateLogin(credentials) {
