@@ -44,26 +44,25 @@
               <div class="headline ml-4 pt-2">Current Weather for {{ zipCode }}</div>
               <hr class="mb-2" />
               <v-layout row>
-                <v-layout column class="ml-5 mb-2">
-                  <div>{{ currentWeather.weather.description }}</div>
-                  <div>Temperature: {{ currentWeather.temp }} &deg;C</div>
-                  <div>Feels Like: {{ currentWeather.app_temp }} &deg;C</div>
-                  <div>Wind: {{ currentWeather.wind_spd.toFixed(1) }} m/s {{ currentWeather.wind_cdir_full }}</div>
-                  <div>Humidity: {{ currentWeather.rh }}%</div>
+                <v-layout column align-center>
+                  <v-layout row>
+                    <v-layout column class="ml-5 mb-4 mt-2">
+                      <div>{{ currentWeather.weather.description }}</div>
+                      <div>Temperature: {{ currentWeather.temp }} &deg;C</div>
+                      <div>Feels Like: {{ currentWeather.app_temp }} &deg;C</div>
+                      <div>Wind: {{ currentWeather.wind_spd.toFixed(1) }} m/s {{ currentWeather.wind_cdir_full }}</div>
+                      <div>Humidity: {{ currentWeather.rh }}%</div>
+                    </v-layout>
+                    <v-layout column>
+                      <v-img
+                        :src="require(`@/assets/images/weather_icons/${currentWeather.weather.icon}.png`)"
+                        height="100px"
+                        contain
+                        class="mb-5"
+                      />
+                    </v-layout>
+                  </v-layout>
                 </v-layout>
-                <v-layout column>
-                  <v-img
-                    :src="require(`@/assets/images/weather_icons/${currentWeather.weather.icon}.png`)"
-                    height="100px"
-                    contain
-                  />
-                </v-layout>
-                <v-layout column />
-                <v-layout column />
-                <v-layout column />
-                <v-layout column />
-                <v-layout column />
-                <v-layout column />
               </v-layout>
             </v-card>
           </v-flex>
