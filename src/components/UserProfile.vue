@@ -151,7 +151,7 @@ export default {
         });
     },
     selectUser(user) {
-      
+      console.log(this);
     }
   }
 };
