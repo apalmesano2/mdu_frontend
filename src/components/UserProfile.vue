@@ -48,9 +48,24 @@
               style="max-height: 300px; overflow-y: auto"
             >
               <template v-slot:item.actions="{ item }">
-                <v-icon @click="updateUser(item)">mdi-pencil</v-icon>
-                <v-icon @click="deleteUser(item)">mdi-trash-can</v-icon>
-                <v-icon @click="selectUser(item)">mdi-check-circle</v-icon>
+                <v-tooltip top>
+                  <template v-slot:activator="{ on }">
+                    <v-icon @click="updateUser(item)" v-on="on">mdi-pencil</v-icon>
+                  </template>
+                  <span>Edit User</span>
+                </v-tooltip>
+                <v-tooltip top>
+                  <template v-slot:activator="{ on }">
+                    <v-icon @click="deleteUser(item)" v-on="on">mdi-trash-can</v-icon>
+                  </template>
+                  <span>Delete User</span>
+                </v-tooltip>
+                <v-tooltip top>
+                  <template v-slot:activator="{ on }">
+                    <v-icon @click="selectUser(item)" v-on="on">mdi-check-circle</v-icon>
+                  </template>
+                  <span>Select User</span>
+                </v-tooltip>
               </template>
             </v-data-table>
           </v-flex>
@@ -73,21 +88,36 @@ export default {
   data: () => ({
     users: [],
     selectedUser: {
-      stockPreference: '',
-      newsPreference:''
+      stockPreference: "",
+      newsPreference: ""
     },
     validUserName: "Guest",
     userSize: 0,
     showMsg: "",
     headers: [
-      { text: "Record Number", value:"id", sortable: false, align: "left" },
-      { text: "Name", value:"name", sortable: false, align: "left" },
-      { text: "Zip Code", value:"zip_code", sortable: false, align: "left" },
-      { text: "Email", value:"email", sortable: false, align: "left" },
-      { text: "News Preference", value:"news_preference", sortable: false, align: "left" },
-      { text: "Stock Preference", value:"stock_preference", sortable: false, align: "left" },
-      { text: "Favorite Team", value:"favorite_team", sortable: false, align:"left"},
-      { text:"Actions", name: "Actions", value: "actions" }
+      { text: "Record Number", value: "id", sortable: false, align: "left" },
+      { text: "Name", value: "name", sortable: false, align: "left" },
+      { text: "Zip Code", value: "zip_code", sortable: false, align: "left" },
+      { text: "Email", value: "email", sortable: false, align: "left" },
+      {
+        text: "News Preference",
+        value: "news_preference",
+        sortable: false,
+        align: "left"
+      },
+      {
+        text: "Stock Preference",
+        value: "stock_preference",
+        sortable: false,
+        align: "left"
+      },
+      {
+        text: "Favorite Team",
+        value: "favorite_team",
+        sortable: false,
+        align: "left"
+      },
+      { text: "Actions", name: "Actions", value: "actions" }
     ]
   }),
   mounted() {
@@ -119,8 +149,8 @@ export default {
             localStorage.removeItem("isAuthenticates");
             localStorage.removeItem("log_user");
             localStorage.removeItem("token");
-            localStorage.removeItem('newsPreference');
-            localStorage.removeItem('stockPreference');
+            localStorage.removeItem("newsPreference");
+            localStorage.removeItem("stockPreference");
             router.push("/auth");
           }
         });
@@ -153,8 +183,8 @@ export default {
             localStorage.removeItem("isAuthenticates");
             localStorage.removeItem("log_user");
             localStorage.removeItem("token");
-            localStorage.removeItem('newsPreference');
-            localStorage.removeItem('stockPreference');
+            localStorage.removeItem("newsPreference");
+            localStorage.removeItem("stockPreference");
             router.push("/auth");
           }
         });
@@ -162,13 +192,13 @@ export default {
     selectUser(user) {
       let parsedData;
       this.users.forEach(element => {
-        if(element.id === user.id) {
+        if (element.id === user.id) {
           this.selectedUser.stockPreference = element.stock_preference;
           console.log(this.selectedUser);
           this.selectedUser.newsPreference = element.news_preference;
           console.log(this.selectedUser);
-          localStorage.setItem('stockPreference', element.stock_preference);
-          localStorage.setItem('newsPreference', element.news_preference);
+          localStorage.setItem("stockPreference", element.stock_preference);
+          localStorage.setItem("newsPreference", element.news_preference);
         }
       });
     }
