@@ -17,7 +17,7 @@
         <v-layout wrap>
           <v-flex md12>
             <v-card v-if="authenticated" class="mb-4 mx-auto">
-              <p class="headline mx-4 pt-3 mb-0">Your Market Tracker's Previous 6 Days:</p>
+              <p class="headline mx-4 pt-3 mb-0">Your Market Tracker's Previous 6 Days: {{ preference }}</p>
               <hr class="mb-2" />
               <v-layout wrap>
                 <template v-for="day in tracker">
@@ -66,6 +66,7 @@ const apiService = new APIService();
 export default {
   name: "Stocks",
   data: () => ({
+    preference: '',
     sectors: [],
     groups: [],
     tracker: [],
@@ -107,11 +108,14 @@ export default {
             localStorage.removeItem("isAuthenticates");
             localStorage.removeItem("log_user");
             localStorage.removeItem("token");
+            localStorage.removeItem('newsPreference');
+            localStorage.removeItem('stockPreference');
             router.push("/auth");
           }
         });
     },
     getMarketTracker() {
+      this.preference = localStorage.getItem('stockPreference');
       apiService
         .getMarketTracker()
         .then(response => {
@@ -159,6 +163,8 @@ export default {
             localStorage.removeItem("isAuthenticates");
             localStorage.removeItem("log_user");
             localStorage.removeItem("token");
+            localStorage.removeItem('newsPreference');
+            localStorage.removeItem('stockPreference');
             router.push("/auth");
           }
         });

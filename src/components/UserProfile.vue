@@ -72,6 +72,10 @@ export default {
   name: "UserList",
   data: () => ({
     users: [],
+    selectedUser: {
+      stockPreference: '',
+      newsPreference:''
+    },
     validUserName: "Guest",
     userSize: 0,
     showMsg: "",
@@ -114,6 +118,8 @@ export default {
             localStorage.removeItem("isAuthenticates");
             localStorage.removeItem("log_user");
             localStorage.removeItem("token");
+            localStorage.removeItem('newsPreference');
+            localStorage.removeItem('stockPreference');
             router.push("/auth");
           }
         });
@@ -146,12 +152,24 @@ export default {
             localStorage.removeItem("isAuthenticates");
             localStorage.removeItem("log_user");
             localStorage.removeItem("token");
+            localStorage.removeItem('newsPreference');
+            localStorage.removeItem('stockPreference');
             router.push("/auth");
           }
         });
     },
     selectUser(user) {
-      console.log(this);
+      let parsedData;
+      this.users.forEach(element => {
+        if(element.id === user.id) {
+          this.selectedUser.stockPreference = element.stock_preference;
+          console.log(this.selectedUser);
+          this.selectedUser.newsPreference = element.news_preference;
+          console.log(this.selectedUser);
+          localStorage.setItem('stockPreference', element.stock_preference);
+          localStorage.setItem('newsPreference', element.news_preference);
+        }
+      });
     }
   }
 };

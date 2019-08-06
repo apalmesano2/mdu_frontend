@@ -104,6 +104,8 @@ export default {
             localStorage.removeItem("isAuthenticates");
             localStorage.removeItem("log_user");
             localStorage.removeItem("token");
+            localStorage.removeItem('newsPreference');
+            localStorage.removeItem('stockPreference');
             // router.go(-1);
             this.showMsg = "error";
           });

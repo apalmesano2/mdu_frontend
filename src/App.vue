@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <v-toolbar dense color="grey darken-3">
-
       <v-img
         class="mx-2"
         :src="require('@/assets/images/logo.png')"
@@ -19,7 +18,7 @@
         <v-btn text @click="viewStocks">Stocks</v-btn>
         <v-btn text @click="viewEvents">Events</v-btn>
         <v-btn text @click="viewWeather">Weather</v-btn>
-        <v-btn text v-if="authenticated" @click="viewUsers" >Profile</v-btn>
+        <v-btn text v-if="authenticated" @click="viewUsers">Profile</v-btn>
         <v-btn text v-if="!authenticated" @click="login">Log in</v-btn>
         <v-btn text v-if="authenticated" @click="logout">Log Out</v-btn>
       </v-toolbar-items>
@@ -38,7 +37,7 @@ const apiService = new APIService();
 export default {
   name: "App",
   data: () => ({
-    authenticated: false,
+    authenticated: false
   }),
 
   mounted() {
@@ -52,6 +51,8 @@ export default {
           localStorage.removeItem("isAuthenticates");
           localStorage.removeItem("log_user");
           localStorage.removeItem("token");
+          localStorage.removeItem("newsPreference");
+          localStorage.removeItem("stockPreference");
           this.authenticated = false;
         }
       });
@@ -63,6 +64,8 @@ export default {
       localStorage.removeItem("isAuthenticates");
       localStorage.removeItem("log_user");
       localStorage.removeItem("token");
+      localStorage.removeItem("newsPreference");
+      localStorage.removeItem("stockPreference");
       this.authenticated = false;
       // router.push('/');
       window.location = "/";

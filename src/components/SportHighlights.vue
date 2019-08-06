@@ -67,13 +67,15 @@ export default {
         this.sporthighlights= response.data.articles;
       })
       .catch(error => {
-        if (error.response.status === 401) {
+          if (error.response.status === 401) {
             localStorage.removeItem("isAuthenticates");
             localStorage.removeItem("log_user");
             localStorage.removeItem("token");
+            localStorage.removeItem("newsPreference");
+            localStorage.removeItem("stockPreference");
             router.push("/auth");
           }
-      });
+        });
     },
     goToLink(url) {
       window.open(url, "_blank");

@@ -51,7 +51,12 @@ export class APIService {
   }
 
   getNewsForPage(user) {
-    return axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${NEWS_API}`);
+    if(!localStorage.getItem('newsPreference')) {
+      return axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${NEWS_API}`);
+    }
+
+    const source = localStorage.getItem('newsPreference');
+    return axios.get(`https://newsapi.org/v2/top-headlines?sources=${source}&apiKey=${NEWS_API}`);
   }
 
   getSectorData() {
@@ -59,7 +64,12 @@ export class APIService {
   }
 
   getMarketTracker() {
-    return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=^DJI&outputsize=compact&apikey=${STOCK_API}`);
+    if(!localStorage.getItem('stockPreference')) {
+      return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=^DJI&outputsize=compact&apikey=${STOCK_API}`);
+    }
+    
+    const tracker = localStorage.getItem('stockPreference');
+    return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${tracker}&outputsize=compact&apikey=${STOCK_API}`);
   }
 
   getCurrentWeather(zipcode) {
@@ -72,12 +82,36 @@ export class APIService {
     return axios.get(`https://www.thesportsdb.com/api/v1/json/1/eventshighlights.php`);
   }
 
-  getSportEvents(user) {
-    return axios.get(`https://www.thesportsdb.com/api/v1/json/1/eventstv.php?c=TSN_1`);
+  getSportEventsTV() {
+    const date = new Date()
+    const day = date.getDate()
+    const month = date.getMonth()
+    const year = date.getFullYear();
+
+    day < 10 ? '0' + day : day;
+    month < 10 ? '0' + month : month;
+
+    const dateString = year + '-' + month + '-' + day;
+
+    return axios.get(`https://www.thesportsdb.com/api/v1/json/1/eventstv.php?d=${dateString}`)
+  }
+
+  getSportsEvents() {
+    const date = new Date()
+    const day = date.getDate()
+    const month = date.getMonth()
+    const year = date.getFullYear();
+
+    day < 10 ? '0' + day : day;
+    month < 10 ? '0' + month : month;
+
+    const dateString = year + '-' + month + '-' + day;
+
+    return axios.get(`https://www.thesportsdb.com/api/v1/json/1/eventsday.php?d=${dateString}`)
   }
 
   getSportsTeam(team) {
-    const url = `https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=${TEAM}`;
+    const url = 'https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t={TEAM}';
     const sportsURL = url.replace('{TEAM}', team);
     return axios.get(sportsURL);
   }

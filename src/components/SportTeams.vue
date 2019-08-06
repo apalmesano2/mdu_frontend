@@ -95,7 +95,17 @@ export default {
       this.TeamEntered = true;
       apiService.getSportsTeam(team).then(response => {
         this.SportsTeam = response.data.data[0];
-      });
+      })
+      .catch(error => {
+          if (error.response.status === 401) {
+            localStorage.removeItem("isAuthenticates");
+            localStorage.removeItem("log_user");
+            localStorage.removeItem("token");
+            localStorage.removeItem("newsPreference");
+            localStorage.removeItem("stockPreference");
+            router.push("/auth");
+          }
+        });;
     }
   }
 };

@@ -15,6 +15,13 @@
       <br />
       <v-container grid-list-md fill-height>
         <v-layout wrap>
+          <v-flex md12>
+            <v-card class="mb-1">
+              <div class="headline ml-4 pt-2">Today's top headlines {{ preference }}</div>
+              <hr class="mb-2" />
+              <p></p>
+            </v-card>
+          </v-flex>
           <template v-for="story in news">
             <v-flex :key="story" md4>
               <v-card class="mx-auto" min-height="600px" :key="story">
@@ -46,6 +53,7 @@ const apiService = new APIService();
 export default {
   name: "NewsList",
   data: () => ({
+    preference: "",
     news: [],
     validUserName: "Guest",
     newsSize: 0,
@@ -68,17 +76,23 @@ export default {
       }
     },
     getNews() {
-      apiService.getNewsForPage().then(response => {
-        this.news = response.data.articles;
-      })
-      .catch(error => {
-        if (error.response.status === 401) {
+      let pref = localStorage.getItem("newsPreference");
+      this.preference = "from " + pref;
+      apiService
+        .getNewsForPage()
+        .then(response => {
+          this.news = response.data.articles;
+        })
+        .catch(error => {
+          if (error.response.status === 401) {
             localStorage.removeItem("isAuthenticates");
             localStorage.removeItem("log_user");
             localStorage.removeItem("token");
+            localStorage.removeItem("newsPreference");
+            localStorage.removeItem("stockPreference");
             router.push("/auth");
           }
-      });
+        });
     },
     goToLink(url) {
       window.open(url, "_blank");
