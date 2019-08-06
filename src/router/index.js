@@ -37,7 +37,7 @@ export default new Router({
       component: UserCreate
     },
     {
-      path: '/user-create/:pk',
+      path: '/user-create/:id',
       name: 'UserUpdate',
       component: UserCreate
     },

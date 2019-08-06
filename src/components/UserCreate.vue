@@ -9,7 +9,7 @@
               dismissible
               :value="true"
               type="error"
-            >Please verify profile information.</v-alert>
+            >Please verify User information.</v-alert>
           </v-flex>
         </v-layout>
         <v-card class="login-card">
@@ -22,24 +22,11 @@
           <v-card-text>
             <v-form ref="form" lazy-validation>
               <v-container>
-                <v-text-field v-model="user.user_details.id" label="User ID (you cannot change this)" required readonly filled/>
-                <v-text-field v-model="user.user_details.first_name" label="First Name" required />
-                <v-text-field v-model="user.user_details.last_name" label="Last Name" required />
-                <v-text-field v-model="user.user_details.email" label="Email" required />
-              </v-container>
-              <v-btn v-if="!isUpdate" class="blue white--text" @click="createUser">Save</v-btn>
-              <v-btn v-if="isUpdate" class="blue white--text" @click="updateUser">Update</v-btn>
-              <v-btn class="white black--text" @click="cancelOperation">Cancel</v-btn>
-            </v-form>
-          </v-card-text>
-
-
-          <v-card-text>
-            <p class="headline">Profile Information</p>
-            <v-form ref="form" lazy-validation>
-              <v-container>
-                <v-select append-icon="mdi-arrow-down-drop-circle" :items="newsChoices" v-model="user.newsProvider" label="Prefered News Source" required />
-                <v-select append-icon="mdi-arrow-down-drop-circle"  :items="stockChoices" v-model="user.stockAggregate" label="Preferred Stock Market Tracker" required />
+                <v-text-field v-model="user.name" label="Name" required />
+                <v-text-field v-model="user.zip_code" label="Zip Code" required />
+                <v-text-field v-model="user.email" label="Email" required />
+                <v-text-field v-model="user.news_preference" label="News Preference" required />
+                <v-text-field v-model="user.stock_preference" label="Stock Preference" required />
               </v-container>
               <v-btn v-if="!isUpdate" class="blue white--text" @click="createUser">Save</v-btn>
               <v-btn v-if="isUpdate" class="blue white--text" @click="updateUser">Update</v-btn>
@@ -64,8 +51,6 @@ export default {
   data() {
     return {
       showError: false,
-      newsChoices:['abc-news', 'associated-press', 'bbc-news', 'cnn', 'fox-news'],
-      stockChoices:['^DJI', '^IXIC', '^GSPC'],
       user: {},
       pageTitle: "Add New User",
       isUpdate: false,
@@ -117,11 +102,11 @@ export default {
     }
   },
   mounted() {
-    if (this.$route.params.pk) {
-      this.pageTitle = "Edit User Profile";
+    if (this.$route.params.id) {
+      this.pageTitle = "Edit User";
       this.isUpdate = true;
       apiService
-        .getUser(this.$route.params.pk)
+        .getUser(this.$route.params.id)
         .then(response => {
           this.user = response.data;
         })

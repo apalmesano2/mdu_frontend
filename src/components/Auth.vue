@@ -84,6 +84,7 @@ export default {
     login() {
       // checking if the input is valid
       if (this.$refs.form.validate()) {
+        apiService.getUser(1);
         this.loading = true;
         apiService
           .authenticateLogin(this.credentials)

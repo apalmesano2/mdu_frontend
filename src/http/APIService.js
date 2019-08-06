@@ -1,6 +1,6 @@
 /* eslint-disable */
 import axios from 'axios';
-const API_URL = 'http://mydailyupdate.herokuapp.com'; /* http://groyce.pythonanywhere.com/ or http://localhost:8000 */
+const API_URL = 'http://localhost:8000'; /* http://groyce.pythonanywhere.com/ or http://localhost:8000 */
 const NEWS_API = '5e1e0ae2beea466f8673c0ab1ae181f8';
 const STOCK_API = '5MHUFOYQCBAHIL3Z';
 const WEATHER_API = '32bad162ffbf4942ad533f40ca430f9f';
@@ -12,7 +12,7 @@ export class APIService {
   }
 
   getUser(param_pk) {
-    const url = `${API_URL}/api/users/${param_pk}`;
+    const url = `${API_URL}/api/mdu_users/${param_pk}`;
     let jwtToken = localStorage.getItem('token');
     console.log(":::jwtToken:::::" + jwtToken);
     const headers = { Authorization: `jwt ${jwtToken}` };
@@ -20,7 +20,7 @@ export class APIService {
   }
 
   getUserList() {
-    const url = `${API_URL}/api/users/`;
+    const url = `${API_URL}/api/mdu_users/`;
     let jwtToken = localStorage.getItem('token');
     console.log(":::jwtToken:::::" + jwtToken);
     const headers = { Authorization: `jwt ${jwtToken}` };
@@ -29,14 +29,14 @@ export class APIService {
   }
 
   addNewUser(user) {
-    const url = `${API_URL}/api/users/`;
+    const url = `${API_URL}/api/mdu_users/`;
     let jwtToken = localStorage.getItem('token');
     const headers = { Authorization: `jwt ${jwtToken}` };
     return axios.post(url, user, { headers: headers });
   }
 
   updateUser(user) {
-    const url = `${API_URL}/api/users/${user.pk}`;
+    const url = `${API_URL}/api/mdu_users/${user.pk}`;
     let jwtToken = localStorage.getItem('token');
     const headers = { Authorization: `jwt ${jwtToken}` };
     console.log(user);
@@ -44,7 +44,7 @@ export class APIService {
   }
 
   deleteUser(user_pk) {
-    const url = `${API_URL}/api/user/${user_pk}`;
+    const url = `${API_URL}/api/mdu_user/${user_pk}`;
     let jwtToken = localStorage.getItem('token');
     const headers = { Authorization: `jwt ${jwtToken}` };
     return axios.delete(url, { headers: headers });
