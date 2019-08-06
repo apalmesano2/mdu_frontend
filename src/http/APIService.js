@@ -84,27 +84,32 @@ export class APIService {
 
   getSportEventsTV() {
     const date = new Date()
-    const day = date.getDate()
-    const month = date.getMonth()
+    let day = date.getDate()
+    let month = date.getMonth()
     const year = date.getFullYear();
-
-    day < 10 ? '0' + day : day;
-    month < 10 ? '0' + month : month;
-
+    if(day < 10) {
+      day = '0' + day;
+    }
+    if(month < 10) {
+      month = '0' + (month + 1);
+    }
     const dateString = year + '-' + month + '-' + day;
 
     return axios.get(`https://www.thesportsdb.com/api/v1/json/1/eventstv.php?d=${dateString}`)
   }
 
-  getSportsEvents() {
+  getSportEvents() {
     const date = new Date()
-    const day = date.getDate()
-    const month = date.getMonth()
+    let day = date.getDate()
+    let month = date.getMonth()
     const year = date.getFullYear();
 
-    day < 10 ? '0' + day : day;
-    month < 10 ? '0' + month : month;
-
+    if(day < 10) {
+      day = '0' + day;
+    }
+    if(month < 10) {
+      month = '0' + (month + 1);
+    }
     const dateString = year + '-' + month + '-' + day;
 
     return axios.get(`https://www.thesportsdb.com/api/v1/json/1/eventsday.php?d=${dateString}`)

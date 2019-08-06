@@ -6,7 +6,7 @@ import UserProfile from '@/components/UserProfile'
 import UserCreate from '@/components/UserCreate'
 import NewsList from '@/components/NewsList'
 import Sports from '@/components/Sports'
-// import SportsEvents from '@/components/SportsEvents'
+import SportEvents from '@/components/SportEvents'
 import Stocks from '@/components/Stocks'
 import Events from '@/components/Events'
 import Weather from '@/components/Weather';
@@ -52,11 +52,11 @@ export default new Router({
       name: 'Sports',
       component: Sports
     },
-    // {
-    //   path:'/sportsevents',
-    //   name: 'SportsEvents',
-    //   component: SportsEvents
-    // },
+    {
+      path:'/sportevents',
+      name: 'SportEvents',
+      component: SportEvents
+    },
     {
       path: '/stocks',
       name: 'Stocks',

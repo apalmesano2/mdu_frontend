@@ -18,18 +18,17 @@
     <br />
     <v-container grid-list-md fill-height>
       <v-layout wrap>
-        <template v-for="event in sportEvents">
+        <!--<template v-for="event in sportEvents">-->
           <v-flex :key="event" md4>
             <v-card class="mx-auto" min-height="600px">
-              <p class="headline mx-4 pt-5" :key="event">{{ event.strEvent }}</p>
-              <p class="ml-4 mt-5">{{ event.strCountry }}</p>
-              <p class="ml-4 mt-5">{{ event.strChannel }}</p>
-              <v-img :src="strLogo.urlToImage" height="325px" contain />
-              <p class="ml-4 mt-5">{{ event.strTime }}</p>
-              <p class="ml-4 mt-5">{{ event.dateEvent }}</p>
+              {{ sportEvents }}
+              <!-- <p class="headline mx-4 pt-5" :key="event">{{ event.strEvent }}</p>
+              <p class="ml-4 mt-5">{{ event.strSport }}</p>
+              <p class="ml-4 mt-5">{{ event.dateEvent.toDateString() }}</p>
+              <p class="ml-4 mt-5">{{ event.strTime }}</p> -->
             </v-card>
           </v-flex>
-        </template>
+        <!--</template>-->
       </v-layout>
     </v-container>
   </main>
@@ -69,7 +68,7 @@ export default {
       apiService
         .getSportEvents()
         .then(response => {
-          this.sportEvents = response.data.articles;
+          this.sportEvents = response;
         })
         .catch(error => {
           if (error.response.status === 401) {
