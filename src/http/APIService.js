@@ -68,6 +68,20 @@ export class APIService {
     return axios.get(newURL);
   }
 
+  getSportHighlights(user) {
+    return axios.get(`https://www.thesportsdb.com/api/v1/json/1/eventshighlights.php`);
+  }
+
+  getSportEvents(user) {
+    return axios.get(`https://www.thesportsdb.com/api/v1/json/1/eventstv.php?c=TSN_1`);
+  }
+
+  getSportsTeam(team) {
+    const url = `https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=${TEAM}`;
+    const sportsURL = url.replace('{TEAM}', team);
+    return axios.get(sportsURL);
+  }
+
   getForecast(zipcode) {
     const url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${WEATHER_API}&postal_code={ZIP_CODE}&country=US`;
     const newURL = url.replace('{ZIP_CODE}', zipcode);
