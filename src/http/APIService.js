@@ -1,6 +1,6 @@
 /* eslint-disable */
 import axios from 'axios';
-const API_URL = 'http://localhost:8000'; /* http://groyce.pythonanywhere.com/ or http://localhost:8000 */
+const API_URL = 'https://mdu-backend.herokuapp.com/'; /* http://groyce.pythonanywhere.com/ or http://localhost:8000 */
 const NEWS_API = '5e1e0ae2beea466f8673c0ab1ae181f8';
 const STOCK_API = '5MHUFOYQCBAHIL3Z';
 const WEATHER_API = '32bad162ffbf4942ad533f40ca430f9f';
