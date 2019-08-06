@@ -68,7 +68,7 @@ export default {
       apiService
         .getSportEvents()
         .then(response => {
-          this.sportEvents = response;
+          this.sportEvents = response.data.tvevents;
         })
         .catch(error => {
           if (error.response.status === 401) {
