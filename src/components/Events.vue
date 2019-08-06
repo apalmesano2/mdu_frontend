@@ -25,7 +25,6 @@
                       label="Location"
                       v-model="location"
                       :rules="rules.location"
-                      maxlength="5"
                     />
                   </v-flex>
                   <v-flex md1>
