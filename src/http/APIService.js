@@ -36,7 +36,7 @@ export class APIService {
   }
 
   updateUser(user) {
-    const url = `${API_URL}/api/mdu_users/${user.pk}`;
+    const url = `${API_URL}/api/mdu_users/${user.id}`;
     let jwtToken = localStorage.getItem('token');
     const headers = { Authorization: `jwt ${jwtToken}` };
     console.log(user);

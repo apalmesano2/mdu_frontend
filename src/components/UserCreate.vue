@@ -27,6 +27,7 @@
                 <v-text-field v-model="user.email" label="Email" required />
                 <v-text-field v-model="user.news_preference" label="News Preference" required />
                 <v-text-field v-model="user.stock_preference" label="Stock Preference" required />
+                <v-text-field v-model="user.favorite_team" label="Favorite Team" requires />
               </v-container>
               <v-btn v-if="!isUpdate" class="blue white--text" @click="createUser">Save</v-btn>
               <v-btn v-if="isUpdate" class="blue white--text" @click="updateUser">Update</v-btn>

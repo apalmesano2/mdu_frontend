@@ -86,6 +86,7 @@ export default {
       { text: "Email", value:"email", sortable: false, align: "left" },
       { text: "News Preference", value:"news_preference", sortable: false, align: "left" },
       { text: "Stock Preference", value:"stock_preference", sortable: false, align: "left" },
+      { text: "Favorite Team", value:"favorite_team", sortable: false, align:"left"},
       { text:"Actions", name: "Actions", value: "actions" }
     ]
   }),
