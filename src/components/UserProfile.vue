@@ -109,3 +109,9 @@ export default {
   }
 };
 </script>
+<style>
+.v-content {
+  height: 100%;
+  background-color: #303030;
+}
+</style>
