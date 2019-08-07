@@ -7,7 +7,7 @@
           Welcome {{validUserName}}!
           <footer>
             <small>
-              <em>&mdash; Here are your favorite team's recent and upcoming games</em>
+              <em>&mdash; Here the information we could find on your favorite team</em>
             </small>
           </footer>
         </blockquote>
@@ -16,7 +16,7 @@
       <v-container grid-list-md fill-height>
         <v-layout wrap>
           <v-flex md12>
-            <v-layout wrap>
+            <v-layout column>
               <v-card class="mb-2">
                 <div class="headline ml-4 pt-2">Information {{ preference }}</div>
                 <hr class="mb-2" />
