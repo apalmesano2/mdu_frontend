@@ -110,6 +110,7 @@ export default {
             localStorage.removeItem("token");
             localStorage.removeItem('newsPreference');
             localStorage.removeItem('stockPreference');
+            localStorage.removeItem('teamPreference');
             router.push("/auth");
           }
         });
@@ -165,6 +166,7 @@ export default {
             localStorage.removeItem("token");
             localStorage.removeItem('newsPreference');
             localStorage.removeItem('stockPreference');
+            localStorage.removeItem('teamPreference');
             router.push("/auth");
           }
         });

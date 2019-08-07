@@ -53,6 +53,7 @@ export default {
           localStorage.removeItem("token");
           localStorage.removeItem("newsPreference");
           localStorage.removeItem("stockPreference");
+          localStorage.removeItem('teamPreference');
           this.authenticated = false;
         }
       });
@@ -66,6 +67,7 @@ export default {
       localStorage.removeItem("token");
       localStorage.removeItem("newsPreference");
       localStorage.removeItem("stockPreference");
+      localStorage.removeItem('teamPreference');
       this.authenticated = false;
       // router.push('/');
       window.location = "/";

@@ -155,6 +155,7 @@ export default {
             localStorage.removeItem("token");
             localStorage.removeItem("newsPreference");
             localStorage.removeItem("stockPreference");
+            localStorage.removeItem('teamPreference');
             router.push("/auth");
           }
         });
@@ -189,6 +190,7 @@ export default {
             localStorage.removeItem("token");
             localStorage.removeItem("newsPreference");
             localStorage.removeItem("stockPreference");
+            localStorage.removeItem('teamPreference');
             router.push("/auth");
           }
         });
@@ -203,6 +205,7 @@ export default {
           console.log(this.selectedUser);
           localStorage.setItem("stockPreference", element.stock_preference);
           localStorage.setItem("newsPreference", element.news_preference);
+          localStorage.setItem("teamPreference", element.favorite_team);
         }
       });
     }

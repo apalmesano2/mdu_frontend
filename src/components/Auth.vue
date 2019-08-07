@@ -106,6 +106,7 @@ export default {
             localStorage.removeItem("token");
             localStorage.removeItem('newsPreference');
             localStorage.removeItem('stockPreference');
+            localStorage.removeItem('teamPreference');
             // router.go(-1);
             this.showMsg = "error";
           });
