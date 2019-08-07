@@ -61,7 +61,7 @@
                   <hr class="mb-2" />
                   <div class="ml-4">{{ sportsTeam.strDescriptionEN }}</div>
                   <br />
-                  <div class="title ml-4">Team Badge &amp; Uniform</div>
+                  <div class="title ml-4">Team Badge, Uniform &amp; Logo</div>
                   <hr class="mb-2" />
                   <v-layout wrap class="ml-4">
                     <v-flex md4>
@@ -100,8 +100,6 @@
     </v-container>
   </main>
 </template>
-
-
 <script>
 import router from "../router";
 import { APIService } from "../http/APIService";
