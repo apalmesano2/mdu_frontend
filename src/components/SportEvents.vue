@@ -14,26 +14,39 @@
       </v-layout>
     </v-container>
     <br />
-    <br />
-    <br />
     <v-container grid-list-md fill-height>
       <v-layout wrap>
-        <!--<template v-for="event in sportEvents">-->
-          <v-flex :key="event" md4>
-            <v-card class="mx-auto" min-height="600px">
-              {{ sportEvents }}
-              <!-- <p class="headline mx-4 pt-5" :key="event">{{ event.strEvent }}</p>
-              <p class="ml-4 mt-5">{{ event.strSport }}</p>
-              <p class="ml-4 mt-5">{{ event.dateEvent.toDateString() }}</p>
-              <p class="ml-4 mt-5">{{ event.strTime }}</p> -->
+        <v-flex md12>
+          <v-card>
+            <div class="headline ml-5 pt-2">Sport Events on TV Today</div>
+            <hr class="mb-2" />
+          </v-card>
+        </v-flex>
+        <template v-for="event in sportEvents">
+          <v-flex :key="event" md6>
+            <v-card class="mx-auto mb-2">
+              <v-layout column align-center>
+                <v-layout row>
+                  <v-flex md6>
+                    <div class="ml-5">
+                      <div class="title pt-2">{{ event.strSport }}: {{ event.strEvent }}</div>
+                      <div>Channel: {{ event.strChannel }}</div>
+                      <div>Date: {{ event.dateEvent }}</div>
+                      <div class="mb-2">Time: {{ event.strTime }}</div>
+                    </div>
+                  </v-flex>
+                  <v-flex md6>
+                    <v-img :src="event.strLogo" height="75px" contain class="mt-5" />
+                  </v-flex>
+                </v-layout>
+              </v-layout>
             </v-card>
           </v-flex>
-        <!--</template>-->
+        </template>
       </v-layout>
     </v-container>
   </main>
 </template>
-
 <script>
 import router from "../router";
 import { APIService } from "../http/APIService";

@@ -54,13 +54,13 @@
               <template v-slot:item.actions="{ item }">
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
-                    <v-icon @click="updateUser(item)" v-on="on">mdi-pencil</v-icon>
+                    <v-icon @click="updateUser(item)" class="mr-3" v-on="on">mdi-pencil</v-icon>
                   </template>
                   <span>Edit User</span>
                 </v-tooltip>
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
-                    <v-icon @click="deleteUser(item)" v-on="on">mdi-trash-can</v-icon>
+                    <v-icon @click="deleteUser(item)" class="mr-3" v-on="on">mdi-trash-can</v-icon>
                   </template>
                   <span>Delete User</span>
                 </v-tooltip>
