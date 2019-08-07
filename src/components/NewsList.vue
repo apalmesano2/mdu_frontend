@@ -16,8 +16,8 @@
       <v-container grid-list-md fill-height>
         <v-layout wrap>
           <v-flex md12>
-            <v-card class="mb-1">
-              <div class="headline ml-4 pt-2">Today's top headlines {{ preference }}</div>
+            <v-card>
+              <div class="headline ml-4 pt-2">Today's Top Headlines {{ preference }}</div>
               <hr class="mb-2" />
               <p></p>
             </v-card>
@@ -76,8 +76,13 @@ export default {
       }
     },
     getNews() {
-      let pref = localStorage.getItem("newsPreference");
-      this.preference = "from " + pref;
+      if (localStorage.getItem("newsPreference")) {
+        let pref = localStorage.getItem("newsPreference");
+        this.preference = "from " + pref;
+      } else {
+        this.preference = '';
+      }
+
       apiService
         .getNewsForPage()
         .then(response => {
@@ -90,7 +95,7 @@ export default {
             localStorage.removeItem("token");
             localStorage.removeItem("newsPreference");
             localStorage.removeItem("stockPreference");
-            localStorage.removeItem('teamPreference');
+            localStorage.removeItem("teamPreference");
             router.push("/auth");
           }
         });

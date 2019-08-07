@@ -51,7 +51,7 @@ export class APIService {
   }
 
   getNewsForPage(user) {
-    if(!localStorage.getItem('newsPreference')) {
+    if (!localStorage.getItem('newsPreference')) {
       return axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${NEWS_API}`);
     }
 
@@ -64,10 +64,10 @@ export class APIService {
   }
 
   getMarketTracker() {
-    if(!localStorage.getItem('stockPreference')) {
+    if (!localStorage.getItem('stockPreference')) {
       return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=^DJI&outputsize=compact&apikey=${STOCK_API}`);
     }
-    
+
     const tracker = localStorage.getItem('stockPreference');
     return axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${tracker}&outputsize=compact&apikey=${STOCK_API}`);
   }
@@ -87,10 +87,10 @@ export class APIService {
     let day = date.getDate()
     let month = date.getMonth()
     const year = date.getFullYear();
-    if(day < 10) {
+    if (day < 10) {
       day = '0' + day;
     }
-    if(month < 10) {
+    if (month < 10) {
       month = '0' + (month + 1);
     }
     const dateString = year + '-' + month + '-' + day;
@@ -98,10 +98,20 @@ export class APIService {
     return axios.get(`https://www.thesportsdb.com/api/v1/json/1/eventstv.php?d=${dateString}`)
   }
 
-  getSportsTeam(team) {
-    const url = 'https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t={TEAM}';
-    const sportsURL = url.replace('{TEAM}', team);
-    return axios.get(sportsURL);
+  getSportsTeam() {
+    if (!localStorage.getItem('teamPreference')) {
+      debugger;
+      const response = {
+        data: {
+          data:
+            ['test data']
+        }
+      }
+      return response;
+    }
+
+    const team = localStorage.getItem('teamPreference');
+    return axios.get(`https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=${team}`);
   }
 
   getForecast(zipcode) {
@@ -111,7 +121,7 @@ export class APIService {
   }
 
   getEvents(location, radius) {
-    if(location.includes(', ')) {
+    if (location.includes(', ')) {
       location.replace(', ', '+');
     }
     // Eventful API doesn't like CORS requests, have to use a proxy here

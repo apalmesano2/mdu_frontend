@@ -27,7 +27,7 @@
                   <v-card>
                     <v-img :src="require('@/assets/images/tiles/video.png')" height="200px"></v-img>
                     <v-card-actions>
-                      <v-btn text @click="viewSportHighlights">View Sport Highlights</v-btn>
+                      <v-btn text @click="viewSportHighlights">Watch Highlights</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
@@ -36,7 +36,7 @@
                   <v-card>
                     <v-img :src="require('@/assets/images/tiles/sportevents.png')" height="200px"></v-img>
                     <v-card-actions>
-                      <v-btn text @click="viewSportEvents">View Sport Events</v-btn>
+                      <v-btn text @click="viewSportEvents">TV Schedule</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
@@ -45,7 +45,7 @@
                   <v-card>
                     <v-img :src="require('@/assets/images/tiles/teams.png')" height="200px"></v-img>
                     <v-card-actions>
-                      <v-btn text @click="viewSportTeams">Search Sport Teams</v-btn>
+                      <v-btn text @click="viewSportTeams">Your Team</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>

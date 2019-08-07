@@ -7,7 +7,7 @@
           Welcome {{validUserName}}!
           <footer>
             <small>
-              <em>&mdash; Enter a team below</em>
+              <em>&mdash; Here are your favorite team's recent and upcoming games</em>
             </small>
           </footer>
         </blockquote>
@@ -16,42 +16,84 @@
       <v-container grid-list-md fill-height>
         <v-layout wrap>
           <v-flex md12>
-            <v-card class="mb-2 mx-auto">
-              <v-form ref="form" v-model="valid" lazy-validation>
-                <v-layout row justify-center>
-                  <v-flex md11>
-                    <v-text-field
-                      class="ml-5"
-                      label="Enter a team"
-                      v-model="Team"
-                      maxlength="25"
-                    />
-                  </v-flex>
-                  <v-flex md1>
-                    <v-btn
-                      class="mt-4 ml-5 blue darken-4"
-                      :disabled="!valid"
-                      @click="getTeam(Team)"
-                    >Submit</v-btn>
-                  </v-flex>
-                </v-layout>
-              </v-form>
-            </v-card>
-          </v-flex>
-          <v-flex md12>
-            <v-card v-if="TeamEntered" class="mb-1">
-              <div class="headline ml-4 pt-2">Current information for {{ Team }}</div>
-              <hr class="mb-2" />
-              <v-layout row>
-                <v-layout column align-center>
-                  <v-layout row>
-                    <v-layout column class="ml-5 mb-4 mt-2">
-                      <div>{{ SportsTeam.strStadium }}</div>
+            <v-layout wrap>
+              <v-card class="mb-2">
+                <div class="headline ml-4 pt-2">Information {{ preference }}</div>
+                <hr class="mb-2" />
+                <v-card>
+                  <div class="title ml-4">Basic Information</div>
+                  <hr class="mb-2" />
+                  <div class="ml-4">
+                    <div>Year Founded: {{ sportsTeam.intFormedYear }}</div>
+                    <div>League: {{ sportsTeam.strLeague }}</div>
+                    <v-layout row>
+                      <v-flex md6>
+                        <div>Stadium: {{ sportsTeam.strStadium }}</div>
+                        <div class="ml-4">Location: {{ sportsTeam.strStadiumLocation }}</div>
+                        <div class="ml-4">Capacity: {{ sportsTeam.intStadiumCapacity }}</div>
+                        <div class="ml-4">Description: {{ sportsTeam.strStadiumDescription }}</div>
+                      </v-flex>
+                      <v-flex md6>
+                        <v-img :src="sportsTeam.strStadiumThumb" height="300px" contain />
+                      </v-flex>
                     </v-layout>
+                    <v-layout row class="mt-5 ml-1 mb-2">
+                      <v-btn
+                        @click="goToLink(sportsTeam.strWebsite)"
+                        class="blue darken-4 mr-4"
+                      >Website</v-btn>
+                      <v-btn @click="goToLink(sportsTeam.strFacebook)" class="blue darken-4 mr-4">
+                        <v-icon class="mr-2 ml-n1">mdi-facebook-box</v-icon>Facebook
+                      </v-btn>
+                      <v-btn @click="goToLink(sportsTeam.strTwitter)" class="blue darken-4 mr-4">
+                        <v-icon class="mr-2 ml-n1">mdi-twitter-box</v-icon>Twitter
+                      </v-btn>
+                      <v-btn @click="goToLink(sportsTeam.strInstagram)" class="blue darken-4 mr-4">
+                        <v-icon class="mr-2 ml-n1">mdi-instagram</v-icon>Instagram
+                      </v-btn>
+                      <v-btn @click="goToLink(sportsTeam.strYoutube)" class="blue darken-4">
+                        <v-icon class="mr-2 ml-n1">mdi-youtube</v-icon>YouTube
+                      </v-btn>
+                    </v-layout>
+                  </div>
+                  <br />
+                  <div class="title ml-4">Team Description</div>
+                  <hr class="mb-2" />
+                  <div class="ml-4">{{ sportsTeam.strDescriptionEN }}</div>
+                  <br />
+                  <div class="title ml-4">Team Badge &amp; Uniform</div>
+                  <hr class="mb-2" />
+                  <v-layout wrap class="ml-4">
+                    <v-flex md4>
+                      <img :src="sportsTeam.strTeamBadge" height="200px" contain />
+                    </v-flex>
+                    <v-flex md4>
+                      <img :src="sportsTeam.strTeamJersey" height="200px" contain />
+                    </v-flex>
+                    <v-flex md4>
+                      <img :src="sportsTeam.strTeamLogo" height="200px" contain />
+                    </v-flex>
                   </v-layout>
-                </v-layout>
-              </v-layout>
-            </v-card>
+                  <br />
+                  <div class="title ml-4">Fan Art</div>
+                  <hr class="mb-2" />
+                  <v-layout wrap class="ml-4">
+                    <v-flex md6>
+                      <img :src="sportsTeam.strTeamFanart1" height="400px" contain />
+                    </v-flex>
+                    <v-flex md6>
+                      <img :src="sportsTeam.strTeamFanart2" height="400px" contain />
+                    </v-flex>
+                    <v-flex md6>
+                      <img :src="sportsTeam.strTeamFanart3" height="400px" contain />
+                    </v-flex>
+                    <v-flex md6>
+                      <img :src="sportsTeam.strTeamFanart4" height="400px" contain />
+                    </v-flex>
+                  </v-layout>
+                </v-card>
+              </v-card>
+            </v-layout>
           </v-flex>
         </v-layout>
       </v-container>
@@ -69,15 +111,17 @@ export default {
   name: "Sports",
   data: () => ({
     valid: true,
+    preference: "",
     authenticated: false,
-    Team: "",
-    TeamEntered: false,
-    SportsTeam: [],
+    team: "",
+    teamEntered: false,
+    sportsTeam: [],
     validUserName: "Guest",
     showMsg: "",
-    headers: [],
+    headers: []
   }),
   mounted() {
+    this.getTeam();
     this.showMessages();
     if (localStorage.getItem("isAuthenticates")) {
       this.authenticated = true;
@@ -91,22 +135,32 @@ export default {
         this.showMsg = this.$route.params.msg;
       }
     },
-    getTeam(team) {
-      this.TeamEntered = true;
-      apiService.getSportsTeam(team).then(response => {
-        this.SportsTeam = response.data.data[0];
-      })
-      .catch(error => {
+    getTeam() {
+      let pref;
+      if (localStorage.getItem("teamPreference")) {
+        this.preference = " for " + localStorage.getItem("teamPreference");
+      }
+
+      apiService
+        .getSportsTeam()
+        .then(response => {
+          this.sportsTeam = response.data.teams[0];
+        })
+        .catch(error => {
           if (error.response.status === 401) {
             localStorage.removeItem("isAuthenticates");
             localStorage.removeItem("log_user");
             localStorage.removeItem("token");
             localStorage.removeItem("newsPreference");
             localStorage.removeItem("stockPreference");
-            localStorage.removeItem('teamPreference');
+            localStorage.removeItem("teamPreference");
             router.push("/auth");
           }
-        });;
+        });
+    },
+    goToLink(url) {
+      const newURL = "http://" + url;
+      window.open(newURL, "_blank");
     }
   }
 };
