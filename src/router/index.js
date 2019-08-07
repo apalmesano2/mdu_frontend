@@ -8,6 +8,7 @@ import NewsList from '@/components/NewsList'
 import Sports from '@/components/Sports'
 import SportEvents from '@/components/SportEvents'
 import SportTeams from '@/components/SportTeams'
+import SportHighlights from '@/components/SportHighlights'
 import Stocks from '@/components/Stocks'
 import Events from '@/components/Events'
 import Weather from '@/components/Weather';
@@ -62,6 +63,11 @@ export default new Router({
       path:'/sportteams',
       name: 'SportTeams',
       component: SportTeams
+    },
+    {
+      path:'/sporthighlights',
+      name: 'SportHighlights',
+      component: SportHighlights
     },
     {
       path: '/stocks',

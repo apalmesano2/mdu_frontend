@@ -17,19 +17,29 @@
     <br />
     <br />
     <v-container grid-list-md fill-height>
-        <v-layout wrap>
-          <template v-for="tvhighlights in SportHighlights">
-            <v-flex :key="tvhighlights" md4>
-              <v-card class="mx-auto" min-height="600px" :key="tvhighlights">
-                <p class="headline mx-4 pt-5" v-bind:key="tvhighlights">{{ tvhighlights.strEvent }}</p>
-                <p class="ml-4 mt-5" :key="tvhighlights">{{ tvhighlights.strSport}}</p>
-                <p class="ml-4 mt-5" :key="tvhighlights">{{ tvhighlights.strLeague}}</p>
-                <p class="ml-4 mt-5" :key="tvhighlights">{{ tvhighlights.strVideo}}</p>
-              </v-card>
-            </v-flex>
-          </template>
-        </v-layout>
-      </v-container>
+      <v-layout wrap>
+        <template v-for="highlight in highlights">
+          <v-flex :key="highlight" md6>
+            <v-card class="mx-auto" :key="highlight">
+              <div class="title ml-4 pt-2">{{ highlight.strSport }}: {{ highlight.strEvent }}</div>
+              <div class="subtitle-1 ml-4">{{ highlight.dateEvent }} | {{ highlight.strLeague }}</div>
+              <hr class="mb-2" />
+              <div class="text-center">
+                <iframe
+                  id="ytplayer"
+                  type="text/html"
+                  width="640"
+                  height="360"
+                  :src="'https://www.youtube.com/embed/'+highlight.videoID+'?autoplay=0&origin=http://example.com'"
+                  frameborder="0"
+                ></iframe>
+              </div>
+            </v-card>
+          </v-flex>
+        </template>
+        {{ highlights }}
+      </v-layout>
+    </v-container>
   </main>
 </template>
 
@@ -38,6 +48,7 @@ import router from "../router";
 import { APIService } from "../http/APIService";
 import vuetify from "../plugins/vuetify";
 import Axios from "axios";
+import { getIdFromURL } from "vue-youtube-embed";
 const apiService = new APIService();
 
 export default {
@@ -45,7 +56,8 @@ export default {
   data: () => ({
     validUserName: "Guest",
     showMsg: "",
-    headers: []
+    headers: [],
+    highlights: []
   }),
   mounted() {
     this.getSportHighlights();
@@ -63,17 +75,25 @@ export default {
       }
     },
     getSportHighlights() {
-      apiService.getSportHighlights().then(response => {
-        this.sporthighlights= response.data.articles;
-      })
-      .catch(error => {
+      let firstRound = [];
+      window.x = this;
+      apiService
+        .getSportHighlights()
+        .then(response => {
+          firstRound = response.data.tvhighlights;
+          firstRound.forEach(highlight => {
+            highlight.videoID = getIdFromURL(highlight.strVideo);
+            this.highlights.push(highlight);
+          });
+        })
+        .catch(error => {
           if (error.response.status === 401) {
             localStorage.removeItem("isAuthenticates");
             localStorage.removeItem("log_user");
             localStorage.removeItem("token");
             localStorage.removeItem("newsPreference");
             localStorage.removeItem("stockPreference");
-            localStorage.removeItem('teamPreference');
+            localStorage.removeItem("teamPreference");
             router.push("/auth");
           }
         });

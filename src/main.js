@@ -5,10 +5,12 @@ import App from './App'
 import router from './router'
 import vuetify from '@/plugins/vuetify'
 import VueSession from 'vue-session'
+import VueYouTubeEmbed from 'vue-youtube-embed'
+import { youtube } from 'vue-youtube-embed'
 
 // Color theme from: https://lobotuerto.com/thingies/vuetify-color-theme-builder/ //
 
-Vue.use(VueSession, {
+Vue.use(VueSession, VueYouTubeEmbed, {
   theme: {
     "primary": "#1976D2",
     "secondary": "#424242",
@@ -26,7 +28,9 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: { 
+    'App': App
+   },
   template: '<App/>',
   vuetify,
 })

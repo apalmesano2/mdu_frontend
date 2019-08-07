@@ -79,7 +79,7 @@ export class APIService {
   }
 
   getSportHighlights(user) {
-    return axios.get(`https://www.thesportsdb.com/api/v1/json/1/eventshighlights.php`);
+    return axios.get('https://www.thesportsdb.com/api/v1/json/1/eventshighlights.php');
   }
 
   getSportEvents() {
