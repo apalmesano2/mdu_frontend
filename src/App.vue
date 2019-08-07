@@ -104,3 +104,8 @@ export default {
   }
 };
 </script>
+<style>
+.v-content {
+  height: 100%;
+}
+</style>

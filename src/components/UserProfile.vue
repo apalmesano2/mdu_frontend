@@ -20,18 +20,22 @@
             dismissible
             :value="true"
             type="success"
+            icon="mdi-check-circle"
           >New user has been added.</v-alert>
           <v-alert
             v-if="showMsg === 'update'"
             dismissible
             :value="true"
             type="success"
+            icon="mdi-check-circle"
+            close-label="mdi-close-circle"
           >User information has been updated.</v-alert>
           <v-alert
             v-if="showMsg === 'deleted'"
             dismissible
             :value="true"
             type="success"
+            icon="mdi-check-circle"
           >Selected User has been deleted.</v-alert>
         </v-flex>
       </v-layout>

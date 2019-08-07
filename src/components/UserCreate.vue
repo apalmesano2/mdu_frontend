@@ -29,8 +29,8 @@
                 <v-text-field v-model="user.stock_preference" label="Stock Preference" required />
                 <v-text-field v-model="user.favorite_team" label="Favorite Team" requires />
               </v-container>
-              <v-btn v-if="!isUpdate" class="blue white--text" @click="createUser">Save</v-btn>
-              <v-btn v-if="isUpdate" class="blue white--text" @click="updateUser">Update</v-btn>
+              <v-btn v-if="!isUpdate" class="blue darken-4" @click="createUser">Save</v-btn>
+              <v-btn v-if="isUpdate" class="blue darken-4" @click="updateUser">Update</v-btn>
               <v-btn class="white black--text" @click="cancelOperation">Cancel</v-btn>
             </v-form>
           </v-card-text>
